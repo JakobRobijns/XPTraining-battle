@@ -26,12 +26,13 @@ public class Army {
         while (soldiers.size() != 0 && defendingSoldiers.size() != 0) {
             Soldier attackingSoldier = soldiers.get(0);
             Soldier defendingSoldier = defendingSoldiers.get(0);
-            if (attackingSoldier.getWeapon().getDamage() >= defendingSoldier.getWeapon().getDamage()) {
+            if (attackingSoldier.fight(defendingSoldier) == attackingSoldier) {
                 defendingSoldiers.remove(0);
             } else {
                 soldiers.remove(0);
             }
         }
+
         if (soldiers.size() == 0) {
             return false;
         }

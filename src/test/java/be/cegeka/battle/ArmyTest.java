@@ -21,7 +21,7 @@ public class ArmyTest {
 
 
     @Test
-    public void AttackerWins_Test() {
+    public void DefenderWins_Test() {
         Army army1 = new Army();
         Army army2 = new Army();
         // Hier automatisch valse gegevens invullen?
@@ -36,6 +36,24 @@ public class ArmyTest {
         army2.enlist(new Soldier("Korneel"));
 
         assertFalse(army1.engage(army2));
+    }
+
+    @Test
+    public void AttackerWins_Test() {
+        Army army1 = new Army();
+        Army army2 = new Army();
+        // Hier automatisch valse gegevens invullen?
+        army1.enlist(new Soldier("Jan", new Spear()));
+        army1.enlist(new Soldier("Piet", new Spear()));
+        army1.enlist(new Soldier("Joris", new Axe()));
+        army1.enlist(new Soldier("Korneel"));
+
+        army2.enlist(new Soldier("Jan", new Spear()));
+        army2.enlist(new Soldier("Piet", new Spear()));
+        army2.enlist(new Soldier("Joris"));
+        army2.enlist(new Soldier("Korneel"));
+
+        assertTrue(army1.engage(army2));
     }
 
 
