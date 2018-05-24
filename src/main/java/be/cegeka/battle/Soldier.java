@@ -6,7 +6,7 @@ import org.apache.commons.lang3.Validate;
 
 public class Soldier {
 
-    private String name;
+    private final String name;
 
     public Soldier(String name) {
         Validate.isTrue(isNotBlank(name));
