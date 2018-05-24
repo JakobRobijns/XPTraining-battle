@@ -46,18 +46,18 @@ public class Soldier {
         this.isFrontman = isFrontman;
     }
 
-    public Soldier fight(Soldier soldier) {
-        Soldier defender = soldier;
+    public Soldier fight(Soldier defender) {
         Soldier attacker = this;
-        Soldier winner;
 
-        if (defender.getWeapon().getDamage() > attacker.getWeapon().getDamage()) {
-            winner = defender;
+        if (wapenDefenderIsSterker(defender, attacker)) {
+            return defender;
         } else {
-            winner = attacker;
+            return attacker;
         }
+    }
 
-        return winner;
+    private boolean wapenDefenderIsSterker(Soldier defender, Soldier attacker) {
+        return defender.getWeapon().getDamage() > attacker.getWeapon().getDamage();
     }
 
 }
