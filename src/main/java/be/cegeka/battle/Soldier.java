@@ -8,15 +8,25 @@ public class Soldier {
 
     private final String name;
 
+    private boolean isFrontman;
+
     public Soldier(String name) {
         Validate.isTrue(isNotBlank(name));
 
         this.name = name;
+        this.isFrontman = false;
     }
 
     String getName() {
         return this.name;
     }
 
+    public boolean getIsFrontman() {
+        return isFrontman;
+    }
+
+    public void setIsFrontman(boolean isFrontman) {
+        this.isFrontman = isFrontman;
+    }
 
 }
