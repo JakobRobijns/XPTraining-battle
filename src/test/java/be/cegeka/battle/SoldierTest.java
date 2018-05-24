@@ -51,11 +51,42 @@ public class SoldierTest {
     }
 
     @Test
-    public void fightSoldier_ReturnsCorrectWinner() {
-        Sword sword = new Sword();
-        Axe axe = new Axe();
+    public void fightSoldierEqualWeapon_ReturnsCorrectWinner() {
         Soldier jan = new Soldier("Jan");
         Soldier tom = new Soldier("Tom");
+        Soldier winner = jan.fight(tom);
+
+        assertEquals(jan, winner);
+    }
+
+    @Test
+    public void fightSoldierOneHasBetterWeapon_ReturnsCorrectWinner() {
+        Axe axe = new Axe();
+        Sword sword = new Sword();
+        Soldier jan = new Soldier("Jan", axe);
+        Soldier tom = new Soldier("Tom", sword);
+        Soldier winner = jan.fight(tom);
+
+        assertEquals(jan, winner);
+    }
+
+    @Test
+    public void fightSoldierWithAdvancedWeapons_ReturnsCorrectWinner() {
+        BroadAxe broadAxe = new BroadAxe();
+        Trident trident = new Trident();
+        Soldier jan = new Soldier("Jan", broadAxe);
+        Soldier tom = new Soldier("Tom", trident);
+        Soldier winner = jan.fight(tom);
+
+        assertEquals(tom, winner);
+    }
+
+    @Test
+    public void fightSoldierWhereOneHasPotion_ReturnsCorrectWinner() {
+        MagicPotion magicPotion = new MagicPotion();
+        Trident trident = new Trident();
+        Soldier jan = new Soldier("Jan", magicPotion);
+        Soldier tom = new Soldier("Tom", trident);
         Soldier winner = jan.fight(tom);
 
         assertEquals(jan, winner);
