@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Army {
 
+    private IHeadquarters headquarters;
+
     private ArrayList<Soldier> soldiers = new ArrayList<Soldier>();
 
     public void enlist(Soldier soldier) {
@@ -11,6 +13,7 @@ public class Army {
             soldier.setIsFrontman(true);
         }
         soldiers.add(soldier);
+        soldier.setID(headquarters.reportEnlistment(soldier.getName()));
     }
 
     public ArrayList<Soldier> getSoldiers() {
@@ -38,6 +41,10 @@ public class Army {
         }
         defender.setSoldiers(defendingSoldiers);
         return true;
+    }
+
+    public void setHQ(IHeadquarters headquarters) {
+        this.headquarters = headquarters;
     }
 
 }

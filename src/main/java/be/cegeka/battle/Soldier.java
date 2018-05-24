@@ -12,6 +12,8 @@ public class Soldier {
 
     private boolean isFrontman = false;
 
+    private int ID;
+
     public Soldier(String name) {
         Validate.isTrue(isNotBlank(name));
 
@@ -51,13 +53,20 @@ public class Soldier {
 
         if (wapenDefenderIsSterker(defender, attacker)) {
             return defender;
-        } else {
-            return attacker;
         }
+        return attacker;
     }
 
     private boolean wapenDefenderIsSterker(Soldier defender, Soldier attacker) {
         return defender.getWeapon().getDamage() > attacker.getWeapon().getDamage();
+    }
+
+    public int getID() {
+        return this.ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
 }
