@@ -10,6 +10,8 @@ public class Soldier {
 
     private Weapon weapon;
 
+    private boolean wounded = false;
+
     private boolean isFrontman = false;
 
     private int ID;
@@ -28,6 +30,14 @@ public class Soldier {
         this.weapon = weapon;
     }
 
+    public Soldier(String name, Weapon weapon, Boolean wounded) {
+        Validate.isTrue(isNotBlank(name));
+
+        this.name = name;
+        this.weapon = weapon;
+        this.wounded = wounded;
+    }
+
     String getName() {
         return this.name;
     }
@@ -42,6 +52,14 @@ public class Soldier {
 
     public boolean getIsFrontman() {
         return isFrontman;
+    }
+
+    public boolean isWounded() {
+        return true;
+    }
+
+    public boolean getStatusWounded() {
+        return this.wounded;
     }
 
     public void setIsFrontman(boolean isFrontman) {
@@ -73,6 +91,17 @@ public class Soldier {
         // Winnaar bepalen
         if (defenderDamage > attackerDamage) {
             return defender;
+        } else if (defenderDamage == attackerDamage) {
+            if (defender.wounded) {
+                // defender.die();
+            } else {
+                defender.wounded = isWounded();
+            }
+            if (attacker.wounded) {
+                // attacker.die();
+            } else {
+                attacker.wounded = isWounded();
+            }
         }
         return attacker;
     }

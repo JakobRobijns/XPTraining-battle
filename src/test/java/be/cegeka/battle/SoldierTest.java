@@ -92,4 +92,23 @@ public class SoldierTest {
         assertEquals(jan, winner);
     }
 
+    @Test
+    public void fightSoldierEqualWeapon_BothGetWounded() {
+        Trident trident = new Trident();
+        Soldier jan = new Soldier("Jan", trident);
+        Soldier tom = new Soldier("Tom", trident);
+        jan.fight(tom);
+
+        assertThat(jan.getStatusWounded()).isTrue();
+        assertThat(tom.getStatusWounded()).isTrue();
+    }
+
+    @Test
+    public void fightsoldierEqualWeapon_OneGetsWounded_OneDies() {
+        Trident trident = new Trident();
+        Soldier jan = new Soldier("Jan", trident, true);
+        Soldier tom = new Soldier("Tom", trident);
+        jan.fight(tom);
+    }
+
 }
