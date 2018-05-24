@@ -78,7 +78,7 @@ public class SoldierTest {
         Soldier tom = new Soldier("Tom", trident);
         Soldier winner = jan.fight(tom);
 
-        assertEquals(tom, winner);
+        assertEquals(jan, winner);
     }
 
     @Test
