@@ -48,9 +48,15 @@ public class Soldier {
 
     public Soldier fight(Soldier defender) {
         Soldier attacker = this;
+        Weapon weaponAttacker = attacker.getWeapon();
+        Weapon weaponDefender = defender.getWeapon();
         int defenderDamage = defender.getWeapon().getDamage();
         int attackerDamage = attacker.getWeapon().getDamage();
 
+        // Kijken of attacker een bonus kan krijgen
+        attackerDamage += checkAdvantage(weaponAttacker, weaponDefender);
+
+        // Kijken of iemand magicpotion heeft
         if (ifSoldierHasMagicPotion(defender)) {
             if (ifSoldierDamageIsEven(attackerDamage)) {
                 defenderDamage = 10;
@@ -62,11 +68,23 @@ public class Soldier {
             }
         }
 
+        // Winnaar bepalen
         if (defenderDamage > attackerDamage) {
             return defender;
-        } else {
-            return attacker;
         }
+        return attacker;
+    }
+
+    public int checkAdvantage(Weapon weaponAttacker, Weapon weaponDefender) {
+        int advantage = 0;
+
+        if ((weaponAttacker instanceof Axe && weaponDefender instanceof Spear)
+                || (weaponAttacker instanceof Spear && weaponDefender instanceof Sword)
+                || (weaponAttacker instanceof Sword && weaponDefender instanceof Axe)) {
+            advantage = 3;
+        }
+
+        return advantage;
     }
 
     private boolean ifSoldierDamageIsEven(int attackerDamage) {
