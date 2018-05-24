@@ -10,6 +10,8 @@ public class Soldier {
 
     private Weapon weapon;
 
+    private boolean isFrontman = false;
+
     public Soldier(String name) {
         Validate.isTrue(isNotBlank(name));
 
@@ -36,5 +38,12 @@ public class Soldier {
         return weapon;
     }
 
+    public boolean getIsFrontman() {
+        return isFrontman;
+    }
+
+    public void setIsFrontman(boolean isFrontman) {
+        this.isFrontman = isFrontman;
+    }
 
 }
