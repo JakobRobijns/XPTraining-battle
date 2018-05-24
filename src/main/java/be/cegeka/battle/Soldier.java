@@ -46,4 +46,18 @@ public class Soldier {
         this.isFrontman = isFrontman;
     }
 
+    public Soldier fight(Soldier soldier) {
+        Soldier defender = soldier;
+        Soldier attacker = this;
+        Soldier winner;
+
+        if (defender.getWeapon().getDamage() > attacker.getWeapon().getDamage()) {
+            winner = defender;
+        } else {
+            winner = attacker;
+        }
+
+        return winner;
+    }
+
 }

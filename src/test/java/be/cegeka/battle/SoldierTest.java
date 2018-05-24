@@ -50,4 +50,15 @@ public class SoldierTest {
         assertEquals(Barefist.class, jan.getWeapon().getClass());
     }
 
+    @Test
+    public void fightSoldier_ReturnsCorrectWinner() {
+        Sword sword = new Sword();
+        Axe axe = new Axe();
+        Soldier jan = new Soldier("Jan");
+        Soldier tom = new Soldier("Tom");
+        Soldier winner = jan.fight(tom);
+
+        assertEquals(jan, winner);
+    }
+
 }
