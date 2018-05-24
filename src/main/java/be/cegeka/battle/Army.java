@@ -8,12 +8,23 @@ public class Army {
 
     private ArrayList<Soldier> soldiers = new ArrayList<Soldier>();
 
+    private String name;
+
+    private int identifier;
+
+    public Army(IHeadquarters headquarters, String name) {
+        this.headquarters = headquarters;
+        this.name = name;
+
+        this.identifier = headquarters.reportArmy(name);
+    }
+
     public void enlist(Soldier soldier) {
         if (soldiers.isEmpty()) {
             soldier.setIsFrontman(true);
         }
         soldiers.add(soldier);
-        soldier.setID(headquarters.reportEnlistment(soldier.getName()));
+        soldier.setID(headquarters.reportEnlistment(soldier.getName(), identifier));
     }
 
     public ArrayList<Soldier> getSoldiers() {
@@ -39,14 +50,20 @@ public class Army {
         }
 
         if (soldiers.size() == 0) {
+            headquarters.reportVictory(defendingSoldiers.size(), identifier);
             return false;
         }
         defender.setSoldiers(defendingSoldiers);
+        headquarters.reportVictory(soldiers.size(), identifier);
         return true;
     }
 
     public void setHQ(IHeadquarters headquarters) {
         this.headquarters = headquarters;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
 }

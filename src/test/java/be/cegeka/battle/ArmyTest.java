@@ -23,11 +23,14 @@ public class ArmyTest {
 
     @Before
     public void setUp() throws Exception {
-        army1 = new Army();
-        army2 = new Army();
         hqMock = mock(IHeadquarters.class);
-        army1.setHQ(hqMock);
-        army2.setHQ(hqMock);
+        army1 = new Army(hqMock, "Army1");
+        army2 = new Army(hqMock, "Army2");
+    }
+
+    @Test
+    public void armyMustHaveName_Test() {
+        assertEquals("Army1", army1.getName());
     }
 
 
@@ -77,14 +80,14 @@ public class ArmyTest {
 
         army1.enlist(new Soldier("Jan", new Spear()));
 
-        verify(hqMock).reportEnlistment("Jan");
+        verify(hqMock).reportEnlistment("Jan", 0);
     }
 
 
     @Test
     public void soldierEnlists_getIDfromHQ() {
         Soldier soldier = new Soldier("Jan", new Spear());
-        when(hqMock.reportEnlistment(soldier.getName())).thenReturn(12);
+        when(hqMock.reportEnlistment(soldier.getName(), 0)).thenReturn(12);
         army1.enlist(soldier);
 
         assertEquals(12, soldier.getID());
@@ -94,12 +97,30 @@ public class ArmyTest {
     public void soldierDies_reportToHQ() {
         Soldier soldier1 = new Soldier("Jan", new Axe());
         Soldier soldier2 = new Soldier("Jan", new Spear());
-        when(hqMock.reportEnlistment(soldier2.getName())).thenReturn(12);
+        when(hqMock.reportEnlistment(soldier2.getName(), 0)).thenReturn(12);
         army1.enlist(soldier1);
         army2.enlist(soldier2);
         army1.engage(army2);
 
         verify(hqMock).reportCasualty(12);
+    }
+
+
+    @Test
+    public void armyWins_isReportedToHQwithRemainingAmmountSoldiers() {
+        Soldier soldier1 = new Soldier("Jan", new Axe());
+        Soldier soldier2 = new Soldier("Jan", new Spear());
+        when(hqMock.reportEnlistment(soldier2.getName(), 0)).thenReturn(12);
+        army1.enlist(soldier1);
+        army2.enlist(soldier2);
+        army1.engage(army2);
+
+        verify(hqMock).reportVictory(1, 0);
+    }
+
+    @Test
+    public void armyIsReportedOnCreation_Test() {
+        verify(hqMock).reportArmy(army1.getName());
     }
 
 
