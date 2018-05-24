@@ -30,9 +30,11 @@ public class Army {
             Soldier attackingSoldier = soldiers.get(0);
             Soldier defendingSoldier = defendingSoldiers.get(0);
             if (attackingSoldier.fight(defendingSoldier) == attackingSoldier) {
+                headquarters.reportCasualty(defendingSoldier.getID());
                 defendingSoldiers.remove(0);
             } else {
                 soldiers.remove(0);
+                headquarters.reportCasualty(attackingSoldier.getID());
             }
         }
 
