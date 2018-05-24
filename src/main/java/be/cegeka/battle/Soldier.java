@@ -48,17 +48,16 @@ public class Soldier {
 
     public Soldier fight(Soldier defender) {
         Soldier attacker = this;
-        MagicPotion magicPotion = new MagicPotion();
         int defenderDamage = defender.getWeapon().getDamage();
         int attackerDamage = attacker.getWeapon().getDamage();
 
-        if (defender.getWeapon().getClass() == magicPotion.getClass()) {
-            if (attackerDamage % 2 == 0) {
+        if (ifSoldierHasMagicPotion(defender)) {
+            if (ifSoldierDamageIsEven(attackerDamage)) {
                 defenderDamage = 10;
             }
         }
-        if (attacker.getWeapon().getClass() == magicPotion.getClass()) {
-            if (defenderDamage % 2 == 0) {
+        if (ifSoldierHasMagicPotion(attacker)) {
+            if (ifSoldierDamageIsEven(defenderDamage)) {
                 attackerDamage = 10;
             }
         }
@@ -68,6 +67,15 @@ public class Soldier {
         } else {
             return attacker;
         }
+    }
+
+    private boolean ifSoldierDamageIsEven(int attackerDamage) {
+        return attackerDamage % 2 == 0;
+    }
+
+    private boolean ifSoldierHasMagicPotion(Soldier soldier) {
+        MagicPotion magicPotion = new MagicPotion();
+        return soldier.getWeapon().getClass() == magicPotion.getClass();
     }
 
 }
