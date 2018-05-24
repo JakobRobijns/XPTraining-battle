@@ -1,31 +1,53 @@
 package be.cegeka.battle;
 
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class SoldierTest {
 
     @Test
     public void construction_ASoldierMustHaveAName() {
-        Soldier soldier = new Soldier("name");
+        Sword sword = new Sword();
+        Soldier soldier = new Soldier("name", sword);
 
         assertThat(soldier.getName()).isEqualTo("name");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construction_ASoldierMustHaveAName_CannotBeNull() {
-        new Soldier(null);
+        Sword sword = new Sword();
+        new Soldier(null, sword);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construction_ASoldierMustHaveAName_CannotBeEmpty() {
-        new Soldier("");
+        Sword sword = new Sword();
+        new Soldier("", sword);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void construction_ASoldierMustHaveAName_CannotBeBlank() {
-        new Soldier("   ");
+        Sword sword = new Sword();
+        new Soldier("   ", sword);
+    }
+
+    @Test
+    public void equipSoldierWithWeapon() {
+        Sword sword = new Sword();
+        Axe axe = new Axe();
+        Soldier jan = new Soldier("Jan", sword);
+        jan.equipWeapon(axe);
+
+        assertEquals(axe, jan.getWeapon());
+    }
+
+    @Test
+    public void createSoldierWithoutWeapon() {
+        Soldier jan = new Soldier("Jan");
+
+        assertEquals(Barefist.class, jan.getWeapon().getClass());
     }
 
 }
