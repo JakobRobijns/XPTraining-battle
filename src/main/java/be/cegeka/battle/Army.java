@@ -37,25 +37,40 @@ public class Army {
 
     public boolean engage(Army defender) {
         ArrayList<Soldier> defendingSoldiers = defender.getSoldiers();
-        while (soldiers.size() != 0 && defendingSoldiers.size() != 0) {
+        while (bothArmiesContainsSoldier(defendingSoldiers)) {
             Soldier attackingSoldier = soldiers.get(0);
             Soldier defendingSoldier = defendingSoldiers.get(0);
-            if (attackingSoldier.fight(defendingSoldier) == attackingSoldier) {
-                headquarters.reportCasualty(defendingSoldier.getID());
-                defendingSoldiers.remove(0);
+            if (attackerWins(attackingSoldier, defendingSoldier)) {
+                soldierDies(defendingSoldiers, defendingSoldier);
             } else {
-                soldiers.remove(0);
-                headquarters.reportCasualty(attackingSoldier.getID());
+                soldierDies(soldiers, attackingSoldier);
             }
         }
 
-        if (soldiers.size() == 0) {
+        if (armyIsDead()) {
             headquarters.reportVictory(defendingSoldiers.size(), identifier);
             return false;
         }
         defender.setSoldiers(defendingSoldiers);
         headquarters.reportVictory(soldiers.size(), identifier);
         return true;
+    }
+
+    private boolean armyIsDead() {
+        return soldiers.size() == 0;
+    }
+
+    private void soldierDies(ArrayList<Soldier> defendingSoldiers, Soldier defendingSoldier) {
+        headquarters.reportCasualty(defendingSoldier.getID());
+        defendingSoldiers.remove(0);
+    }
+
+    private boolean attackerWins(Soldier attackingSoldier, Soldier defendingSoldier) {
+        return attackingSoldier.fight(defendingSoldier) == attackingSoldier;
+    }
+
+    private boolean bothArmiesContainsSoldier(ArrayList<Soldier> defendingSoldiers) {
+        return soldiers.size() != 0 && defendingSoldiers.size() != 0;
     }
 
     public void setHQ(IHeadquarters headquarters) {

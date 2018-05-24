@@ -103,12 +103,5 @@ public class SoldierTest {
         assertThat(tom.getStatusWounded()).isTrue();
     }
 
-    @Test
-    public void fightsoldierEqualWeapon_OneGetsWounded_OneDies() {
-        Trident trident = new Trident();
-        Soldier jan = new Soldier("Jan", trident, true);
-        Soldier tom = new Soldier("Tom", trident);
-        jan.fight(tom);
-    }
 
 }
