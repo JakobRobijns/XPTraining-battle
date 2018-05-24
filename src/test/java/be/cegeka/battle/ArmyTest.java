@@ -103,4 +103,17 @@ public class ArmyTest {
     }
 
 
+    @Test
+    public void armyWins_isReportedToHQwithRemainingAmmountSoldiers() {
+        Soldier soldier1 = new Soldier("Jan", new Axe());
+        Soldier soldier2 = new Soldier("Jan", new Spear());
+        when(hqMock.reportEnlistment(soldier2.getName())).thenReturn(12);
+        army1.enlist(soldier1);
+        army2.enlist(soldier2);
+        army1.engage(army2);
+
+        verify(hqMock).reportVictory(1);
+    }
+
+
 }

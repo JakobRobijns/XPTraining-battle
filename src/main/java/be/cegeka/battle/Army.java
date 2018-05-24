@@ -39,9 +39,11 @@ public class Army {
         }
 
         if (soldiers.size() == 0) {
+            headquarters.reportVictory(defendingSoldiers.size());
             return false;
         }
         defender.setSoldiers(defendingSoldiers);
+        headquarters.reportVictory(soldiers.size());
         return true;
     }
 
