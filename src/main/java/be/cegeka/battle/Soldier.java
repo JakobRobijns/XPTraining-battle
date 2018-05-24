@@ -12,6 +12,8 @@ public class Soldier {
 
     private boolean isFrontman = false;
 
+    private int ID;
+
     public Soldier(String name) {
         Validate.isTrue(isNotBlank(name));
 
@@ -94,6 +96,14 @@ public class Soldier {
     private boolean ifSoldierHasMagicPotion(Soldier soldier) {
         MagicPotion magicPotion = new MagicPotion();
         return soldier.getWeapon().getClass() == magicPotion.getClass();
+    }
+
+    public int getID() {
+        return this.ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
 }

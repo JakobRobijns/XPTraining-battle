@@ -1,30 +1,49 @@
 package be.cegeka.battle;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class ArmyTest {
 
+    private Army army1;
+
+    private Army army2;
+
+    private IHeadquarters hqMock;
+
+
+    @Before
+    public void setUp() throws Exception {
+        army1 = new Army();
+        army2 = new Army();
+        hqMock = mock(IHeadquarters.class);
+        army1.setHQ(hqMock);
+        army2.setHQ(hqMock);
+    }
+
+
     @Test
     public void firstSoldierOfArmyMustBeFrontMan_Test() {
-        Army army = new Army();
-        army.enlist(new Soldier("Soldier1"));
-        army.enlist(new Soldier("Soldier2"));
+        army1.enlist(new Soldier("Soldier1"));
+        army1.enlist(new Soldier("Soldier2"));
 
-        ArrayList<Soldier> soldiers = army.getSoldiers();
+        ArrayList<Soldier> soldiers = army1.getSoldiers();
         assertTrue(soldiers.get(0).getIsFrontman());
     }
 
 
     @Test
     public void DefenderWins_Test() {
-        Army army1 = new Army();
-        Army army2 = new Army();
-        // Hier automatisch valse gegevens invullen?
+
         army1.enlist(new Soldier("Jan", new Spear()));
         army1.enlist(new Soldier("Piet", new Spear()));
         army1.enlist(new Soldier("Joris", new Spear()));
@@ -40,9 +59,6 @@ public class ArmyTest {
 
     @Test
     public void AttackerWins_Test() {
-        Army army1 = new Army();
-        Army army2 = new Army();
-        // Hier automatisch valse gegevens invullen?
         army1.enlist(new Soldier("Jan", new Spear()));
         army1.enlist(new Soldier("Piet", new Spear()));
         army1.enlist(new Soldier("Joris", new Axe()));
@@ -54,6 +70,36 @@ public class ArmyTest {
         army2.enlist(new Soldier("Korneel"));
 
         assertTrue(army1.engage(army2));
+    }
+
+    @Test
+    public void soldierEnlists_isRegisteredToHQ() {
+
+        army1.enlist(new Soldier("Jan", new Spear()));
+
+        verify(hqMock).reportEnlistment("Jan");
+    }
+
+
+    @Test
+    public void soldierEnlists_getIDfromHQ() {
+        Soldier soldier = new Soldier("Jan", new Spear());
+        when(hqMock.reportEnlistment(soldier.getName())).thenReturn(12);
+        army1.enlist(soldier);
+
+        assertEquals(12, soldier.getID());
+    }
+
+    @Test
+    public void soldierDies_reportToHQ() {
+        Soldier soldier1 = new Soldier("Jan", new Axe());
+        Soldier soldier2 = new Soldier("Jan", new Spear());
+        when(hqMock.reportEnlistment(soldier2.getName())).thenReturn(12);
+        army1.enlist(soldier1);
+        army2.enlist(soldier2);
+        army1.engage(army2);
+
+        verify(hqMock).reportCasualty(12);
     }
 
 

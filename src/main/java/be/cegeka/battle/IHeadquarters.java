@@ -3,9 +3,9 @@ package be.cegeka.battle;
 
 public interface IHeadquarters {
 
-    int ReportEnlistment(String soldierName);
+    int reportEnlistment(String soldierName);
 
-    void ReportCasualty(int soldierId);
+    void reportCasualty(int soldierId);
 
-    void ReportVictory(int remainingNumberOfSoldiers);
+    void reportVictory(int remainingNumberOfSoldiers);
 }
